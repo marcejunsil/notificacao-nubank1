@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notificação Fake - NuBank</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .notificacao {
+      background-color: white;
+      width: 90%;
+      max-width: 360px;
+      padding: 16px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      position: fixed;
+      top: 20px;
+      opacity: 0;
+      transform: translateY(-100px);
+      transition: all 0.5s ease;
+      z-index: 9999;
+    }
+    .notificacao.mostrar {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .icone {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background-color: #820ad1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 12px;
+    }
+    .icone img {
+      width: 28px;
+      height: 28px;
+    }
+    .conteudo {
+      flex: 1;
+    }
+    .titulo {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .mensagem {
+      color: #555;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+    .valor {
+      color: green;
+      font-weight: bold;
+    }
+    .input-area {
+      margin-top: 20px;
+      width: 90%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 12px;
+      background-color: #820ad1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #6a09ab;
+    }
+  </style>
+</head>
+<body>
+  <div id="popup" class="notificacao">
+    <div class="icone">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Nubank_logo_2021.svg/1024px-Nubank_logo_2021.svg.png" alt="NuBank" />
+    </div>
+    <div class="conteudo">
+      <div class="titulo">NuBank</div>
+      <div class="mensagem">
+        <span id="pessoa">Fulano de Tal</span> enviou uma transferência Pix de <span id="valor" class="valor">R$ 150,00</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <input type="text" id="inputPessoa" placeholder="Nome de quem transferiu" />
+    <input type="text" id="inputValor" placeholder="Valor (ex: R$ 500,00)" />
+    <input type="number" id="inputTempo" placeholder="Tempo para notificar (segundos)" />
+    <button onclick="agendarNotificacao()">Simular Notificação</button>
+  </div>
+
+  <script>
+    function agendarNotificacao() {
+      const nome = document.getElementById("inputPessoa").value || "Fulano de Tal";
+      const valor = document.getElementById("inputValor").value || "R$ 150,00";
+      const tempo = parseInt(document.getElementById("inputTempo").value) || 3;
+
+      document.getElementById("pessoa").textContent = nome;
+      document.getElementById("valor").textContent = valor;
+
+      setTimeout(() => {
+        const popup = document.getElementById("popup");
+        popup.classList.add("mostrar");
+      }, tempo * 1000);
+    }
+  </script>
+</body>
+</html>
